@@ -1,6 +1,8 @@
-# Ameba IoT SDK Skills for AI Coding Assistants
+# Ameba IoT SDK Skills
 
-AI-powered skills for Realtek Ameba IoT SDK development — works with Claude Code, Cursor, Windsurf, Codex, and other AI coding assistants.
+AI skill files for Realtek Ameba IoT SDK development. Use these with **Cursor, Windsurf, Codex, or any AI coding assistant** that supports custom rules or system prompts.
+
+> **Claude Code users:** Use the [Plugin Marketplace](https://github.com/Ameba-AIoT/ameba-plugin-marketplace) instead — it installs skills and MCP servers automatically in one step.
 
 ---
 
@@ -8,75 +10,52 @@ AI-powered skills for Realtek Ameba IoT SDK development — works with Claude Co
 
 | Skill | Description | Supported ICs |
 |-------|-------------|---------------|
-| `ameba-rtos-overview` | Full SDK assistant: build, flash, monitor, debug, Wi-Fi / BT / USB / OTA / filesystem / peripheral integration | RTL8730E, RTL8721F, RTL8726E, RTL8720E, RTL8710E, RTL8713E, RTL8721Dx |
-| `ameba-quickstart-rmesh` | Interactive quickstart for Wi-Fi R-MESH firmware — IC selection, feature config (RNAT, OTA, TDMA, BLE provisioning), `wificfg.c` patching, Kconfig, and build | All Ameba SoCs with R-MESH support |
+| [`ameba-rtos-overview`](./ameba-rtos-overview/SKILL.md) | Full SDK assistant: build, flash, monitor, debug, Wi-Fi / BT / USB / OTA / filesystem / peripheral integration | RTL8730E, RTL8721F, RTL8726E, RTL8720E, RTL8710E, RTL8713E, RTL8721Dx |
+| [`ameba-quickstart-rmesh`](./ameba-quickstart-rmesh/SKILL.md) | Interactive quickstart for Wi-Fi R-MESH firmware — IC selection, feature config (RNAT, OTA, TDMA, BLE provisioning), `wificfg.c` patching, Kconfig, and build | All Ameba SoCs with R-MESH support |
 
 ---
 
 ## Installation
 
-### Method 1 — Claude Code Plugin Marketplace (Recommended)
+### Cursor
 
-Gives you skills **and** pre-configured MCP servers in one step.
+Copy the skill file into your project's rules directory:
 
 ```bash
-# Step 1: Add this repo as a marketplace source (one-time)
-/plugin marketplace add https://github.com/Ameba-AIoT/skills
-
-# Step 2: Install the plugin
-/plugin install ameba-rtos-dev@skills
+mkdir -p .cursor/rules
+curl -o .cursor/rules/ameba-rtos-overview.mdc \
+  https://raw.githubusercontent.com/Ameba-AIoT/skills/main/ameba-rtos-overview/SKILL.md
 ```
 
-After installation you get:
+Or copy manually: open the skill link above → copy raw content → paste into **Settings → Rules for AI** (global) or `.cursor/rules/<name>.mdc` (project-level).
 
-- **2 skills** auto-loaded into Claude Code: `ameba-rtos-overview`, `ameba-quickstart-rmesh`
-- **1 MCP server** auto-registered: `realmcu-ask-ai-docs` (Realtek documentation query, remote HTTP)
+### Windsurf
 
-#### Prerequisites
+```bash
+curl -o .windsurfrules \
+  https://raw.githubusercontent.com/Ameba-AIoT/skills/main/ameba-rtos-overview/SKILL.md
+```
 
-| Requirement | Details |
-|-------------|---------|
-| `realmcu-ask-ai-docs` MCP | One-time GitHub OAuth. After install, run `/mcp` — if status shows `△ needs authentication`, follow the prompt to complete OAuth. |
-| `AMEBA_SDK_ROOT` (optional) | Only needed if you use the local SDK build/flash features. Export before starting Claude Code: `export AMEBA_SDK_ROOT=<absolute path to your SDK>`. Other skills and MCP are unaffected if this is not set. |
+Or append to an existing `.windsurfrules` file in your project root.
 
----
+### Codex / OpenAI
 
-### Method 2 — Manual SKILL.md Copy
+Paste the skill content into `AGENTS.md` in your project root.
 
-For **Cursor, Windsurf, Codex, and other AI tools** that support custom system prompts or rules files.
+### Other AI Tools
 
-Each skill is a single self-contained Markdown file:
-
-| Skill | File path in this repo |
-|-------|------------------------|
-| `ameba-rtos-overview` | `plugins/ameba-rtos-dev/skills/ameba-rtos-overview/SKILL.md` |
-| `ameba-quickstart-rmesh` | `plugins/ameba-rtos-dev/skills/ameba-quickstart-rmesh/SKILL.md` |
-
-**How to use:**
-
-1. Browse to the skill file above and copy its contents (or download the raw file).
-2. Paste it into your AI tool's custom instructions / rules / system prompt location:
-
-   | Tool | Where to paste |
-   |------|---------------|
-   | **Cursor** | `.cursor/rules/<skill-name>.mdc` in your project, or Settings → Rules for AI |
-   | **Windsurf** | `.windsurfrules` in your project root |
-   | **Codex** | `AGENTS.md` in your project root |
-   | **Other tools** | Any persistent system prompt or project-level rules file |
-
-3. The skill's `description` field tells the AI assistant when to automatically activate it. You can also invoke it manually by describing what you want to do.
-
-> **Note:** Without the MCP servers, features that require live SDK operations (build, flash, serial monitor) will not work. The skills degrade gracefully — documentation queries and guided configuration steps still work.
+Copy the `SKILL.md` content into whichever persistent system prompt or project-level rules file your tool supports.
 
 ---
 
-## Supported Chips
+## Notes
 
-RTL8730E · RTL8721F · RTL8726E · RTL8720E · RTL8710E · RTL8713E · RTL8721Dx
+- Skills are **self-contained Markdown files** — the `description` field tells the AI when to activate automatically.
+- Features requiring live SDK operations (build, flash, serial monitor) need the [realmcu-ask-ai-docs MCP server](https://github.com/Ameba-AIoT/ameba-plugin-marketplace). Without MCP, skills degrade gracefully — documentation queries and guided configuration steps still work.
+- Skills respond in the **user's language** automatically (English, Chinese, Japanese, Korean, etc.).
 
 ---
 
 ## Issues & Contributing
 
-- **Bug reports / feature requests**: [Open an issue](https://github.com/Ameba-AIoT/skills/issues)
-- **Pull requests**: Welcome for skill improvements, typo fixes, and new skill additions
+[Open an issue](https://github.com/Ameba-AIoT/skills/issues) for bug reports, feature requests, or new skill proposals.
