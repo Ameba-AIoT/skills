@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "realmcu-ask-ai-docs": {
+      "type": "http",
+      "url": "https://ameba-aiot.mcp.kapa.ai"
+    }
+  }
+}
