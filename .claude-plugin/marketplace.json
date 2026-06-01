@@ -1,0 +1,31 @@
+{
+  "name": "ameba-aiot-skills",
+  "owner": { "name": "Realtek Ameba-IoT" },
+  "description": "Realtek Ameba IoT SDK agent skills — ameba-rtos-overview and ameba-quickstart-rmesh",
+  "plugins": [
+    {
+      "name": "ameba-rtos-dev",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/ameba-rtos-overview",
+        "./skills/ameba-quickstart-rmesh"
+      ],
+      "description": "Ameba RTOS SDK skill bundle (ameba-rtos-overview / ameba-quickstart-rmesh)",
+      "category": "embedded",
+      "keywords": [
+        "ameba",
+        "realtek",
+        "rtl8730e",
+        "rtl8721f",
+        "rtl8720e",
+        "rtl8721d",
+        "rtl8726e",
+        "rtl8713e",
+        "rtl8710e",
+        "iot",
+        "rtos"
+      ]
+    }
+  ]
+}
